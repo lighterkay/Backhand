@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Set Auth Token</title>
+  </head>
+  <body>
+    <script>
+      function getParam(name){
+        const params = new URLSearchParams(location.search);
+        const v = params.get(name);
+        return v ? decodeURIComponent(v) : null;
+      }
+
+      const token = getParam('token');
+      const userStr = getParam('user');
+
+      if (token && userStr) {
+        try {
+          localStorage.setItem('steakzlighter_token', token);
+          localStorage.setItem('steakzlighter_user', userStr);
+          location.href = '/admin';
+        } catch (e) {
+          document.body.innerText = 'Failed to set auth: ' + e;
+        }
+      } else {
+        document.body.innerText = 'Missing token or user in query string.';
+      }
+    </script>
+  </body>
+</html>
